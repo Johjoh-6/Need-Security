@@ -1,4 +1,5 @@
 function ajax_graph(table, column, type, docId, labelT){
+    showLoading('Récupération des données graphiques...');
     setTimeout(function() {
         $.ajax({
             type: "GET",
@@ -6,18 +7,15 @@ function ajax_graph(table, column, type, docId, labelT){
             data: {table: table,
                 column:  column},
             success: function(response){
-                console.log('sucess');
                 if(response.length > 0){
-                    console.log('response');
-                    console.log(response);
                     const graph = JSON.parse(response);
                     //generate graph
-                    console.log(graph);
                     createGraph(graph, type, docId, labelT );
                 }
+                hideLoading(500);
             },
             error: function(){
-                console.log('error');
+                hideLoading(500);
             }
         });
     }, 600);
@@ -35,9 +33,6 @@ function createGraph(object, type, docId, labelT = '' ) {
         dataT.push(object[key]);
         randomColor.push(color());
     }
-    console.log(keyT);
-    console.log(dataT);
-    console.log(randomColor);
 //func for colos
     function color(){
         let randomColor = Math.floor(Math.random()*16777215).toString(16);
@@ -61,7 +56,7 @@ function createGraph(object, type, docId, labelT = '' ) {
         options: {
             responsive: true,
             layout: {
-                padding: 30
+                padding: 15
             }
         }
     });
@@ -77,15 +72,4 @@ function createGraph(object, type, docId, labelT = '' ) {
         chart.update();
     }
 
-    /*Updating the bar chart with updated data in every second. */
-    // setInterval(function () {
-    //     updatedDataSet = [Math.random(), Math.random(), Math.random(), Math.random()];
-    //     updateBarGraph(chart, 'Prediction', colouarray, updatedDataSet);
-    // }, 10000);
-
-
-//Graph dashboard/index.php
-//First graph
-
-ajax_graph('trames', 'protocol_name', 'pie', 'chart-pie1');
-ajax_graph('trames', 'protocol_name', 'bar', 'chart-bar1', 'hide');
+export {ajax_graph};

@@ -1,3 +1,4 @@
+</main>
 <footer class="footer">
     <div class="footer-top">
         <div class="contact">
@@ -16,7 +17,7 @@
     <div class="footer-bot">
         <p class="copyright">Need Security©2022</p>
         <p><a href="mentionslegales.php">Mentions légales</a></p>
-        <p><a href="contactus.php">Contactez-nous</a></p>
+        <p><a href="aboutus.php">À propos de nous</a></p>
     </div>
 </footer>
 

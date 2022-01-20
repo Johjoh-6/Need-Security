@@ -4,7 +4,6 @@
 const showConnect = document.getElementById('btn-connection');
 const showLogin = document.getElementById('btn-login');
 if (showLogin != null){
-    console.log('btn is present');
     showLogin.addEventListener('click', function(){
         showModal('login');
     });
@@ -19,7 +18,6 @@ function showModal(modalType, defaultEmail = ''){
         actual_modal.remove();
     }
 
-    console.log('Ask for connection');
     const modal = document.createElement('div');
     modal.classList.add('modal');
     const content = document.createElement('div');
@@ -38,6 +36,7 @@ function showModal(modalType, defaultEmail = ''){
     content.appendChild(form);
 
     document.body.insertAdjacentElement("beforeend", modal);
+
 
     if(modalType === 'login'){
         loginModal(defaultEmail);
@@ -77,7 +76,7 @@ function loginModal(defaultEmail = ''){
 
             <input type="submit" id="submitted-login" value="Se connecter">
             <p class="error" id="error-login"></p>
-            <p class="low-focus"><a href="request_pwd.php">Mots de passe oublié</a></p>
+            <p class="low-focus"><a href="request_pwd.php">Mot de passe oublié</a></p>
 
             <p class="sub-btn-modal" id="sign-in">Inscrivez vous</p>
        `;
@@ -111,6 +110,8 @@ function signModal(){
 
             <label for="pwd-confirm">Confirmer votre mots de passe</label>
             <input type="password" name="pwd-confirm" id="pwd-confirm">
+            
+            <p>En vous inscrivant, vous acceptez les <a href="#">Conditions d'Utilisation</a> et la <a href="#">Politique de confidentialité</a></p>
 
             <input type="submit" id="submitted-sign" value="S'inscrire">
             <p class="error" id="error-register"></p>
@@ -129,7 +130,6 @@ function signModal(){
 // Requête de login
 function ajax_requestLogin(email, pass, connectionType = 'normal', rememberMe = 0){ // (rememberMe 0 ou 1)
     const loginError = $('#error-login');
-    const form = $('.form-modal');
 
     setTimeout(function() {
         $.ajax({
@@ -143,16 +143,13 @@ function ajax_requestLogin(email, pass, connectionType = 'normal', rememberMe = 
                     }
                     else{
                         loginError.text(response);
-                        form.css('display', 'block');
                     }
                 }
                 else{
                     loginError.text('Une erreur s\'est produite');
-                    form.css('display', 'block');
                 }
             },
             error: function(){
-                form.css('display', 'block');
             }
         });
     }, 500);
@@ -162,7 +159,6 @@ function ajax_requestLogin(email, pass, connectionType = 'normal', rememberMe = 
 function ajax_requestRegister(email, pass, confPass, prenom = '', nom = ''){ // champs facultatifs nom et prenom
 
     const registerError = $('#error-register');
-    const formRegister = $('#register-form');
 
     setTimeout(function() {
         $.ajax({
@@ -176,16 +172,13 @@ function ajax_requestRegister(email, pass, confPass, prenom = '', nom = ''){ // 
                     }
                     else{
                         registerError.text(response);
-                        formRegister.css('display', 'block');
                     }
                 }
                 else{
                     registerError.text('Une erreur s\'est produite');
-                    formRegister.css('display', 'block');
                 }
             },
             error: function(){
-                formRegister.css('display', 'block');
             }
         });
     }, 200);
@@ -194,7 +187,6 @@ function ajax_requestRegister(email, pass, confPass, prenom = '', nom = ''){ // 
 function add_form_event(modalName){
     //connexion
     if(modalName === 'login'){
-        const loginError = $('#error-login');
         const form = $('#login-form');
 
         form.on( "submit", function(e) {
@@ -256,3 +248,31 @@ function add_form_event(modalName){
         });
     }
 }
+
+$( document ).ready(function() {
+
+    setTimeout(function(){
+        hideLoading();
+    }, 500);
+});
+
+
+//Change content on media query
+const smallDevice = window.matchMedia("(max-width: 480px)");
+const connection = document.getElementById('btn-connection');
+smallDevice.addEventListener('change', changeContent);
+function changeContent(e) {
+    // Check if the media query is true
+    if (e.matches) {
+        const i = document.createElement('i');
+        i.classList.add('fas');
+        i.classList.add('fa-sign-in-alt');
+        connection.innerText = '';
+        connection.appendChild(i);
+    } else {
+        connection.innerText = '';
+        connection.innerText = 'Connexion';
+    }
+}
+// Run it at the init
+changeContent(smallDevice);

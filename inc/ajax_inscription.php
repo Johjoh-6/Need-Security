@@ -18,18 +18,18 @@ if(empty($_GET['prenom'])){
     $prenom = '';
 }
 else{
-    $prenom = trim(strip_tags($_GET['prenom']));
+    $prenom = cleanXss($_GET['prenom']);
 }
 if(empty($_GET['nom'])){
     $nom = '';
 }
 else{
-    $nom = trim(strip_tags($_GET['nom']));
+    $nom = cleanXss($_GET['nom']);
 }
 
-$email = trim(strip_tags($_GET['email']));
-$password = trim(strip_tags($_GET['password']));
-$passwordConf = trim(strip_tags($_GET['passwordConf']));
+$email = cleanXss($_GET['email']);
+$password = cleanXss($_GET['password']);
+$passwordConf = cleanXss($_GET['passwordConf']);
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL) || mb_strlen($email) < 3 || mb_strlen($email) > 128) {
     echo 'Adresse mail invalide';

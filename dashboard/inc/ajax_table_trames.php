@@ -14,7 +14,7 @@ if(!empty($_GET['nbRows'])){
 }
 
 if(!empty($_GET['protocolName'])){
-    $protocol_name = trim(strip_tags($_GET['protocolName']));
+    $protocol_name = cleanXss($_GET['protocolName']);
 }
 
 $trames = db_get_trames(['id', 'frame_date', 'identification', 'protocol_name', 'ip_from', 'ip_dest'], $page, $nbRow, $protocol_name);
@@ -33,15 +33,20 @@ foreach($trames as $trame){
     $cptTrame++;
 }
 
+$count = 0;
 if(mb_strlen($protocol_name) > 0){
-    $sql = "SELECT count(id) FROM trames WHERE protocol_name = '".$protocol_name."'";
+    $sql = "SELECT count(id) FROM trames WHERE protocol_name = :protocol_name";
+    $query = $pdo->prepare($sql);
+    $query->bindValue(':protocol_name', $protocol_name, PDO::PARAM_STR);
+    $query->execute();
+    $count = $query->fetchColumn();
 }
 else{
     $sql = "SELECT count(id) FROM trames";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $count = $query->fetchColumn();
 }
-$query = $pdo->prepare($sql);
-$query->execute();
-$count = $query->fetchColumn();
 if($count <= $nbRow){
     $pages = 1;
 }

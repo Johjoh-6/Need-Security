@@ -1,5 +1,6 @@
 <?php
 $NOM_SITE = 'NƎƎD Security';
+$LEADER = 'Léonard JOUEN';
 $NOM_SITE_COLORED = '<span class="logo_col_1">NƎƎD</span> <span class="logo_col_2">Security</span>';
 
 $DB_HOST = 'localhost';

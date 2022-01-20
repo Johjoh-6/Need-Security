@@ -1,7 +1,7 @@
 <?php
 require_once ('../../inc/bases.php');
-$tableV = trim(strip_tags($_GET['table']));
-$columnV = trim(strip_tags($_GET['column']));
+$tableV = cleanXss($_GET['table']);
+$columnV = cleanXss($_GET['column']);
 if(empty($tableV) && empty($columnV)){
     exit;
 } else {

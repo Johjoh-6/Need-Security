@@ -1,11 +1,29 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.3.6,
+* Autoprefixer: v10.3.1
+* Browsers: last 4 version
+*/
+
+@media screen and (max-width: 900px){
+    #container .table{
+        overflow-x: scroll;
+    }
+}
 @media screen and (max-width: 700px){
     #dashboard-menu{
         height: max(3rem + 2vh, 3rem);
         width: 100%;
     }
     #dashboard-menu ul{
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-flow: row nowrap;
         flex-flow: row nowrap;
+        -ms-flex-line-pack: center;
         align-content: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
         justify-content: center;
         padding: .8rem;
     }
@@ -14,8 +32,35 @@
         margin-top: max(3rem + 2vh, 3rem);
         margin-left: 0;
     }
+    .back-box{
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    }
+    .back-box .data-box{
+        width: calc(100% / 2 - .5rem);
+    }
+    .footer .footer-top, .footer .footer-bot{
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-flow: column nowrap;
+        flex-flow: column nowrap;
+        text-align: center;
+    }
+    .footer .social-red{
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+    }
+    footer .contact{
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
 }
 @media screen and (max-width: 480px){
+    #header p{
+        display: none;
+    }
     #dashboard-menu{
         height: max(2rem + 2vh, 2rem);
         width: 100%;
@@ -29,6 +74,16 @@
     #container{
         margin-top: max(2rem + 2vh, 2rem);
         margin-left: 0;
+    }
+    .back-box{
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+
+    }
+    .back-box .data-box{
+        width: 100%;
     }
 
 }

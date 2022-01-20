@@ -10,101 +10,134 @@ include_once ('inc/header_back.php');
 
 ?>
     <div id="container">
-        <section id="dashboard">
-<!-- Data nombre -->
-                <div class="back-box">
-                    <div class="data-box" data-box="1">
-                        <h3 class="data-box_name">Donnée 1</h3>
-<!--                        data noms-->
-                        <p class="data-box_nb">8</p>
-<!--                        donnée chiffre -->
-                    </div>
-                    <div class="data-box" data-box="2">
-                        <h3 class="data-box_name">Donnée 2 p g j</h3>
-<!--                        data noms-->
-                        <p class="data-box_nb">2</p>
-<!--                        donnée chiffre -->
-                    </div>
-                    <div class="data-box" data-box="3">
-                        <h3 class="data-box_name">Donnée 3</h3>
-                        <!--                        data noms-->
-                        <p class="data-box_nb">3</p>
-                        <!--                        donnée chiffre -->
-                    </div>
-                    <div class="data-box" data-box="4">
-                        <h3 class="data-box_name">Donnée 4</h3>
-                        <!--                        data noms-->
-                        <p class="data-box_nb">43</p>
-                        <!--                        donnée chiffre -->
-                    </div>
+        <section id="simulation">
+            <div class="back-box">
+                <div class="data-box clickable">
+                    <h3 class="data-box_name">ICMP</h3>
                 </div>
+                <div class="data-box clickable">
+                    <h3 class="data-box_name">UDP</h3>
+                </div>
+                <div class="data-box clickable">
+                    <h3 class="data-box_name">TCP</h3>
+                </div><div class="data-box clickable">
+                    <h3 class="data-box_name">TLSv1.2</h3>
+                </div>
+            </div>
 
-<!--Chat JS graphique-->
-                <div class="back-box">
-                    <div class="back-box_graph">
-                        <h2>Trames graph</h2>
-                        <div class="back-box_graph__chatjs">
-                            <canvas id="chart-1"></canvas>
+            <div class="back-box">
+                <div class="way-list">
+                    <h2>Protocole ICMP</h2>
+                    <div  data-trameid="111" class="way-box">
+                        <h4 class="way-title">Paquet <span class="bold-id">0xa443</span></h4>
+
+                        <div class="way">
+
+                            <div class="way-from">
+                                <i class="fas fa-laptop-code way-paquet"></i>
+                                <p class="way-ip way-ip-from">172.217.19.227</p>
+                            </div>
+
+                            <div class="transit-box">
+<!--                                Add class keyframe -->
+                                <i  class="fas fa-network-wired data-transit with-return good" ></i>
+                                <span class="way-code way-code-1">0x00</span>
+                                <i class="fas fa-long-arrow-alt-right way-paquet "></i>
+
+                                <i class="fas fa-long-arrow-alt-left way-paquet "></i>
+                                <span class="way-code way-code-2">0x00</span>
+                            </div>
+
+                            <div class="way-from">
+                                <i class="fas fa-laptop-code way-paquet"></i>
+                                <p class="way-ip way-ip-dest">192.168.1.74</p>
+                            </div>
+
+                        </div>
+                </div>
+                    <div id="bad" data-trameid="112" class="way-box">
+                        <h4 class="way-title">Paquet <span class="bold-id">0xa444</span></h4>
+
+                        <div class="way">
+
+                            <div class="way-from">
+                                <i class="fas fa-laptop-code way-paquet"></i>
+                                <p class="way-ip way-ip-from">172.217.19.227</p>
+                            </div>
+
+                            <div class="transit-box">
+                                <!--                                Add class keyframe -->
+                                <i data-trajet="aller-retour" class="fas fa-network-wired data-transit with-return bad" ></i>
+                                <span class="way-code way-code-1">0x00</span>
+                                <i class="fas fa-long-arrow-alt-right way-paquet "></i>
+
+                                <i class="fas fa-long-arrow-alt-left way-paquet "></i>
+                                <span class="way-code way-code-2">0x00</span>
+                            </div>
+
+                            <div class="way-from">
+                                <i class="fas fa-laptop-code way-paquet"></i>
+                                <p class="way-ip way-ip-dest">192.168.1.74</p>
+                            </div>
+
                         </div>
                     </div>
-                    <div class="back-box_graph">
-                        <h2>Trames graph</h2>
-                        <div class="back-box_graph__chatjs">
-                            <canvas id="chart-2"></canvas>
+<!--for other than ICMP-->
+                    <div  data-trameid="112" class="way-box">
+                        <h4 class="way-title">Paquet <span class="bold-id">0xa444</span></h4>
+
+                        <div class="way">
+
+                            <div class="way-from">
+                                <i class="fas fa-laptop-code way-paquet"></i>
+                                <p class="way-ip way-ip-from">172.217.19.227</p>
+                            </div>
+
+                            <div class="transit-box">
+                                <!--                                Add class keyframe -->
+                                <i data-trajet="aller-retour" class="fas fa-network-wired data-transit one-way good" ></i>
+                                <span class="way-code way-code-1">0x00</span>
+                                <i class="fas fa-long-arrow-alt-right way-paquet "></i>
+
+                            </div>
+
+                            <div class="way-from">
+                                <i class="fas fa-laptop-code way-paquet"></i>
+                                <p class="way-ip way-ip-dest">192.168.1.74</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div  data-trameid="112" class="way-box">
+                        <h4 class="way-title">Paquet <span class="bold-id">0xa444</span></h4>
+
+                        <div class="way">
+
+                            <div class="way-from">
+                                <i class="fas fa-laptop-code way-paquet"></i>
+                                <p class="way-ip way-ip-from">172.217.19.227</p>
+                            </div>
+
+                            <div class="transit-box">
+                                <!--                                Add class keyframe -->
+                                <i data-trajet="aller-retour" class="fas fa-network-wired data-transit one-way bad" ></i>
+                                <span class="way-code way-code-1">0x00</span>
+                                <i class="fas fa-long-arrow-alt-right way-paquet "></i>
+
+                            </div>
+
+                            <div class="way-from">
+                                <i class="fas fa-laptop-code way-paquet"></i>
+                                <p class="way-ip way-ip-dest">192.168.1.74</p>
+                            </div>
+
                         </div>
                     </div>
 
                 </div>
-                <div class="back-box">
-                    <div class="back-box_table">
-                        <h2>Tableau log</h2>
-                            <div class="table" >
-                                <div class="table_head">
-                                        <p>date</p>
-                                        <p>Identification</p>
-                                        <p>Protocol name</p>
-                                        <p>Ip from</p>
-                                        <p>Ip dest</p>
-                                </div>
-                                <div class="table_body" id="dashboard_table">
-                                <div class="table_body_row">
-                                        <p>02/12/2020 10:57:33</p>
-                                        <p>0xa443</p>
-                                        <p>ICMP</p>
-                                        <p>172.217.19.227</p>
-                                        <p>192.168.1.74</p>
-                                </div>
-                                    <div class="table_body_row">
-                                        <p>02/12/2020 10:57:33</p>
-                                        <p>0xa443</p>
-                                        <p>ICMP</p>
-                                        <p>172.217.19.227</p>
-                                        <p>192.168.1.74</p>
-                                    </div>
-                                    <div class="table_body_row">
-                                        <p>02/12/2020 10:57:33</p>
-                                        <p>0xa443</p>
-                                        <p>ICMP</p>
-                                        <p>172.217.19.227</p>
-                                        <p>192.168.1.74</p>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            <div class="paginator">
-
-                            </div>
-                    </div>
-                </div>
-
         </section>
     </div>
-
-<p id="test">la</p>
-    <div>
-        <h1>Chart</h1>
-        <canvas id="Chart" width="800" height="450"></canvas>
-    </div>
+    </main>
 <?php
 include('inc/footer_back.php');

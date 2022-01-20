@@ -5,37 +5,42 @@ if(empty($_GET['protocolName'])){
     exit;
 }
 
-$protocol_name = trim(strip_tags($_GET['protocolName']));
+$protocol_name = cleanXss($_GET['protocolName']);
 if(mb_strlen($protocol_name) == 0){
     exit;
 }
 
-$sql = "SELECT identification,flags_code,ip_from,ip_dest FROM trames WHERE protocol_name = '".$protocol_name."' ORDER BY identification";
+$sql = "SELECT identification,protocol_checksum_status,header_checksum,protocol_name FROM trames WHERE protocol_name = :protocol_name ORDER BY frame_date";
 $query = $pdo->prepare($sql);
+$query->bindValue(':protocol_name', $protocol_name, PDO::PARAM_STR);
 $query->execute();
 $protocol_data = $query->fetchAll();
+$errors_data['paquets_count'] = $query->rowCount();
+$errors_data['erreurs'] = [];
+$errors_data['unverified'] = [];
 
-$sql = "SELECT identification,flags_code,ip_from,ip_dest FROM trames WHERE protocol_name = '".$protocol_name."' GROUP BY identification";
-$query = $pdo->prepare($sql);
-$query->execute();
-$erreurs_data = $query->fetchAll();
-$protocol_data['paquets_count'] = $query->rowCount();
+$ignoreNextTrame = false;
+foreach($protocol_data as $tmpData){
 
-$protocol_data['erreurs'] = [];
-foreach($erreurs_data as $tmpData){
-    $sql = "SELECT flags_code FROM trames WHERE identification = '".$tmpData['identification']."'";
-    $query = $pdo->prepare($sql);
-    $query->execute();
-    $flags_codes = $query->fetchAll();
-    if($query->rowCount() == 2){
-        if($flags_codes[0]['flags_code'] !== $flags_codes[1]['flags_code']){
-            $protocol_data['erreurs'][] = [$tmpData['identification'], 'different_code'];
-        }
+    if($ignoreNextTrame){
+        $ignoreNextTrame = false;
+        continue;
     }
-    else{
-        //$protocol_data['erreurs'][] = [$tmpData['identification'], 'no_response']; // est-ce que c'est vraiment considéré comme une erreur?
+
+    if($tmpData['header_checksum'] === 'unverified' || $tmpData['protocol_checksum_status'] === 'disabled'){
+        $errors_data['unverified'][] = $tmpData['identification'];
+    }
+    else if($tmpData['protocol_name'] === "ICMP"){
+        $sql = "SELECT count(id) FROM trames WHERE identification = :id_trame";
+        $query = $pdo->prepare($sql);
+        $query->bindValue(':id_trame', $tmpData['identification'], PDO::PARAM_STR);
+        $query->execute();
+        if($query->fetchColumn() == 1){
+            $errors_data['erreurs'][] = $tmpData['identification'];
+            $ignoreNextTrame = true;
+        }
     }
 }
 
-$json = json_encode($protocol_data, JSON_PRETTY_PRINT);
+$json = json_encode($errors_data, JSON_PRETTY_PRINT);
 die($json);

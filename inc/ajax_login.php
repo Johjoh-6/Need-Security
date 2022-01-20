@@ -20,11 +20,11 @@ if(empty($_GET['connectionType'])){
     $connectionType = 'normal';
 }
 else{
-    $connectionType = trim(strip_tags($_GET['connectionType']));
+    $connectionType = cleanXss($_GET['connectionType']);
 }
 
-$email = trim(strip_tags($_GET['email']));
-$password = trim(strip_tags($_GET['password']));
+$email = cleanXss($_GET['email']);
+$password = cleanXss($_GET['password']);
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL) || mb_strlen($email) < 3 || mb_strlen($email) > 128) {
     echo 'Adresse mail invalide';

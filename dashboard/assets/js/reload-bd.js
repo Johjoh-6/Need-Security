@@ -15,5 +15,4 @@ function reloadBd() {
     request.send();
 }
 
-reloadBd();
-setInterval(reloadBd, 300000);
+export {reloadBd};
